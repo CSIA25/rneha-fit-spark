@@ -2,10 +2,10 @@
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Box, Torus } from '@react-three/drei';
-import { Mesh } from 'three';
+import { Mesh, Group } from 'three';
 
 const AnimatedDumbbell = () => {
-  const groupRef = useRef<any>();
+  const groupRef = useRef<Group>(null);
   const leftSphereRef = useRef<Mesh>(null);
   const rightSphereRef = useRef<Mesh>(null);
   const barRef = useRef<Mesh>(null);
@@ -25,17 +25,14 @@ const AnimatedDumbbell = () => {
 
   return (
     <group ref={groupRef}>
-      {/* Left weight */}
       <Sphere ref={leftSphereRef} position={[-1.5, 0, 0]} args={[0.4, 16, 16]}>
         <meshStandardMaterial color="#14b8a6" metalness={0.7} roughness={0.3} />
       </Sphere>
       
-      {/* Bar */}
       <Box ref={barRef} position={[0, 0, 0]} args={[2.5, 0.1, 0.1]}>
         <meshStandardMaterial color="#374151" metalness={0.9} roughness={0.1} />
       </Box>
       
-      {/* Right weight */}
       <Sphere ref={rightSphereRef} position={[1.5, 0, 0]} args={[0.4, 16, 16]}>
         <meshStandardMaterial color="#8b5cf6" metalness={0.7} roughness={0.3} />
       </Sphere>
@@ -81,7 +78,17 @@ const FloatingRings = () => {
 const FitnessScene = () => {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
+      <Canvas 
+        camera={{ position: [0, 0, 6], fov: 50 }}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          preserveDrawingBuffer: true
+        }}
+        onCreated={({ gl }) => {
+          gl.setClearColor('#000000', 0);
+        }}
+      >
         <ambientLight intensity={0.4} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <pointLight position={[-10, -10, -10]} intensity={0.5} color="#8b5cf6" />
