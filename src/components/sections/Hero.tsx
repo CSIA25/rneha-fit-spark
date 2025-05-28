@@ -1,7 +1,5 @@
 
 import { motion } from 'framer-motion';
-import { Suspense } from 'react';
-import FitnessScene from '../three/FitnessScene';
 import GradientButton from '../ui/gradient-button';
 import StatsCard from '../ui/stats-card';
 
@@ -92,21 +90,29 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - 3D Scene */}
+          {/* Right Content - Animated Fitness Elements */}
           <motion.div
             className="h-[600px] relative"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-violet-500/20 rounded-3xl backdrop-blur-sm">
-              <Suspense fallback={
-                <div className="flex items-center justify-center h-full">
-                  <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-teal-500"></div>
-                </div>
-              }>
-                <FitnessScene />
-              </Suspense>
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-violet-500/20 rounded-3xl backdrop-blur-sm flex items-center justify-center">
+              {/* Animated Dumbbell Icon */}
+              <motion.div
+                className="text-9xl"
+                animate={{
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                🏋️‍♀️
+              </motion.div>
             </div>
 
             {/* Floating Elements */}
@@ -124,6 +130,28 @@ const Hero = () => {
               transition={{ duration: 2.5, repeat: Infinity }}
             >
               <span className="text-2xl">💯</span>
+            </motion.div>
+
+            <motion.div
+              className="absolute top-20 -left-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full p-3 shadow-xl"
+              animate={{ 
+                x: [0, 15, 0],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <span className="text-xl">💪</span>
+            </motion.div>
+
+            <motion.div
+              className="absolute bottom-32 -right-8 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full p-3 shadow-xl"
+              animate={{ 
+                x: [0, -15, 0],
+                y: [0, -10, 0]
+              }}
+              transition={{ duration: 2.8, repeat: Infinity }}
+            >
+              <span className="text-xl">🎯</span>
             </motion.div>
           </motion.div>
         </div>
